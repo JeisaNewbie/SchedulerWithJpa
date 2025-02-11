@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-public class UsersResponseDto {
+public class GetUsersResponseDto {
     private Long id;
 
     private String username;
@@ -17,7 +17,7 @@ public class UsersResponseDto {
 
     private Integer toDoNum;
 
-    public UsersResponseDto(UserEntity userEntity) {
+    public GetUsersResponseDto(UserEntity userEntity) {
         this.id = userEntity.getId();
         this.username = userEntity.getUsername();
         this.email = userEntity.getEmail();

@@ -2,16 +2,14 @@ package com.example.schedulerwithjpa.dto.response;
 
 import com.example.schedulerwithjpa.entity.ToDoEntity;
 import com.example.schedulerwithjpa.entity.UserEntity;
-import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class UserResponseDto {
+public class GetUserResponseDto {
     private Long id;
 
     private String username;
@@ -22,7 +20,7 @@ public class UserResponseDto {
 
     private List<ToDo> toDos;
 
-    public UserResponseDto(UserEntity userEntity) {
+    public GetUserResponseDto(UserEntity userEntity) {
         this.id = userEntity.getId();
         this.username = userEntity.getUsername();
         this.email = userEntity.getEmail();

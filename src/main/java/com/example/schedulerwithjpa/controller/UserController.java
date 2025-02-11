@@ -3,8 +3,9 @@ package com.example.schedulerwithjpa.controller;
 import com.example.schedulerwithjpa.dto.request.DeleteUserRequestDto;
 import com.example.schedulerwithjpa.dto.request.SignUpRequestDto;
 import com.example.schedulerwithjpa.dto.request.UpdateUserRequestDto;
-import com.example.schedulerwithjpa.dto.response.UserResponseDto;
-import com.example.schedulerwithjpa.dto.response.UsersResponseDto;
+import com.example.schedulerwithjpa.dto.response.GetUserResponseDto;
+import com.example.schedulerwithjpa.dto.response.GetUsersResponseDto;
+import com.example.schedulerwithjpa.dto.response.CreateUserResponseDto;
 import com.example.schedulerwithjpa.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -22,13 +23,13 @@ public class UserController {
 
     // 모든 사용자 조회
     @GetMapping("/user")
-    public ResponseEntity<List<UsersResponseDto>> findAllUsers() {
+    public ResponseEntity<List<GetUsersResponseDto>> findAllUsers() {
         return ResponseEntity.ok(userService.findAllUser());
     }
 
     // 단일 사용자 조회
     @GetMapping("/user/{id}")
-    public ResponseEntity<UserResponseDto> findUserById(
+    public ResponseEntity<GetUserResponseDto> findUserById(
             @Valid
             @Min(value = 1, message = "ID 값은 1 이상이어야 합니다.")
             @PathVariable Long id
@@ -38,7 +39,7 @@ public class UserController {
 
     // 사용자 생성
     @PostMapping("/user")
-    public ResponseEntity<UserResponseDto> saveUser(@Valid @RequestBody SignUpRequestDto dto) {
+    public ResponseEntity<CreateUserResponseDto> saveUser(@Valid @RequestBody SignUpRequestDto dto) {
         return ResponseEntity.ok(userService.saveUser(
                 dto.getUsername(),
                 dto.getEmail(),
@@ -48,7 +49,7 @@ public class UserController {
 
     // 사용자 정보 수정
     @PatchMapping("/user")
-    public ResponseEntity<UserResponseDto> updateUser(@Valid @RequestBody UpdateUserRequestDto dto) {
+    public ResponseEntity<GetUserResponseDto> updateUser(@Valid @RequestBody UpdateUserRequestDto dto) {
 
         userService.updateUser(
                 dto.getEmail(),

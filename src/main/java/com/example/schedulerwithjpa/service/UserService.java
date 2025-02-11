@@ -1,7 +1,8 @@
 package com.example.schedulerwithjpa.service;
 
-import com.example.schedulerwithjpa.dto.response.UserResponseDto;
-import com.example.schedulerwithjpa.dto.response.UsersResponseDto;
+import com.example.schedulerwithjpa.dto.response.GetUserResponseDto;
+import com.example.schedulerwithjpa.dto.response.GetUsersResponseDto;
+import com.example.schedulerwithjpa.dto.response.CreateUserResponseDto;
 import com.example.schedulerwithjpa.entity.UserEntity;
 import com.example.schedulerwithjpa.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -20,17 +21,17 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public List<UsersResponseDto> findAllUser() {
+    public List<GetUsersResponseDto> findAllUser() {
         return userRepository.findAll()
-                .stream().map(UsersResponseDto::new)
+                .stream().map(GetUsersResponseDto::new)
                 .toList();
     }
 
-    public UserResponseDto findUserByUserId(Long id) {
-        return new UserResponseDto(userRepository.findByIdOrElseThrow(id));
+    public GetUserResponseDto findUserByUserId(Long id) {
+        return new GetUserResponseDto(userRepository.findByIdOrElseThrow(id));
     }
 
-    public UserResponseDto saveUser(String username, String email, Long password) {
+    public CreateUserResponseDto saveUser(String username, String email, Long password) {
 
         UserEntity userEntity = UserEntity.builder()
                 .username(username)
@@ -41,7 +42,7 @@ public class UserService {
         UserEntity savedUserEntity = userRepository.findByEmailAndPassword(email, password)
                 .orElseGet(() -> userRepository.save(userEntity));
 
-        return new UserResponseDto(savedUserEntity);
+        return new CreateUserResponseDto(savedUserEntity);
     }
 
     @Transactional

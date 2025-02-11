@@ -1,8 +1,7 @@
 package com.example.schedulerwithjpa.dto.response;
 
 import com.example.schedulerwithjpa.entity.ToDoEntity;
-import com.example.schedulerwithjpa.entity.User;
-import com.example.schedulerwithjpa.entity.UserEntityTmpl;
+import com.example.schedulerwithjpa.entity.UserEntity;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -18,11 +17,10 @@ public class ToDosResponseDto {
 
     private List<ToDo> toDos;
 
-    // UserEntityTmpl -> UserEntity 로 수정
-    public ToDosResponseDto(UserEntityTmpl userEntityTmpl) {
-        this.userId = userEntityTmpl.getId();
-        this.username = userEntityTmpl.getUsername();
-        this.toDos = ToDo.ofList(userEntityTmpl.getToDoEntities());
+    public ToDosResponseDto(UserEntity userEntity) {
+        this.userId = userEntity.getId();
+        this.username = userEntity.getUsername();
+        this.toDos = ToDo.ofList(userEntity.getToDoEntities());
     }
 
     private static class ToDo {

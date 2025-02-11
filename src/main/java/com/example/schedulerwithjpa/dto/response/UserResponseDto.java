@@ -1,5 +1,6 @@
 package com.example.schedulerwithjpa.dto.response;
 
+import com.example.schedulerwithjpa.entity.ToDoEntity;
 import com.example.schedulerwithjpa.entity.UserEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,30 +20,47 @@ public class UserResponseDto {
 
     private LocalDateTime createdAt;
 
-    private List<Schedule> schedules;
+    private List<ToDo> toDos;
 
-    public UserResponseDto(UserEntity savedUserEntity) {
-        this.id = savedUserEntity.getId();
-        this.username = savedUserEntity.getUsername();
-        this.email = savedUserEntity.getEmail();
-        this.createdAt = savedUserEntity.getCreatedAt();
-//        this.schedules = Schedule.getList(savedUser);
+    public UserResponseDto(UserEntity userEntity) {
+        this.id = userEntity.getId();
+        this.username = userEntity.getUsername();
+        this.email = userEntity.getEmail();
+        this.createdAt = userEntity.getCreatedAt();
+        this.toDos = ToDo.ofList(userEntity.getToDoEntities());
     }
 
-    @Builder
-    private static class Schedule {
+    @Getter
+    private static class ToDo {
 
-        private Long scheduleId;
+        private final Long toDoId;
 
-        private String title;
+        private final String title;
 
-        private String content;
+        private final String toDo;
 
-        private LocalDate date;
+        private final LocalDate date;
 
-        public static List<Schedule> getList(UserEntity savedUserEntity) {
-            List<Schedule> schedules = new ArrayList<>();
-            return null;
+        private ToDo(Long toDoId, String title, String toDo, LocalDate date) {
+            this.toDoId = toDoId;
+            this.title = title;
+            this.toDo = toDo;
+            this.date = date;
+        }
+
+        private static ToDo of(ToDoEntity toDoEntity) {
+            return new ToDo(
+                    toDoEntity.getId(),
+                    toDoEntity.getTitle(),
+                    toDoEntity.getToDo(),
+                    toDoEntity.getDate()
+            );
+        }
+
+        private static List<ToDo> ofList(List<ToDoEntity> toDoEntities) {
+            return toDoEntities.stream()
+                    .map(ToDo::of)
+                    .toList();
         }
     }
 }

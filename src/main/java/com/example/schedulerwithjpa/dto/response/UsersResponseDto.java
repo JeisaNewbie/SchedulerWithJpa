@@ -15,12 +15,13 @@ public class UsersResponseDto {
 
     private LocalDateTime createdAt;
 
-    private Long scheduleNum;
+    private Integer toDoNum;
 
     public UsersResponseDto(UserEntity userEntity) {
         this.id = userEntity.getId();
         this.username = userEntity.getUsername();
         this.email = userEntity.getEmail();
         this.createdAt = userEntity.getCreatedAt();
+        this.toDoNum = userEntity.getToDoEntities().size();
     }
 }

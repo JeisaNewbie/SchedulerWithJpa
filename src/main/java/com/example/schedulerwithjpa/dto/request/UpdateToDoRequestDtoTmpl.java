@@ -22,7 +22,7 @@ public class UpdateToDoRequestDtoTmpl {
     @Range(min = 999, max = 9999999999L, message = "비밀번호는 최소 1자리 최대 10자리 입니다.")
     private final Long password;
 
-    @NotBlank
+    @NotNull
     private final LocalDate date;
 
     @NotBlank

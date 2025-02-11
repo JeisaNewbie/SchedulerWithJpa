@@ -17,7 +17,7 @@ public class ToDoRequestDto {
     @Range(min = 1, message = "1 이상의 수를 입력하세요.")
     private final Long userId;
 
-    @NotBlank
+    @NotNull
     private final LocalDate date;
 
     @NotBlank

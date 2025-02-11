@@ -24,5 +24,5 @@ public class CommentEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "to_do_id")
-    private ToDoEntity toDo;
+    private ToDoEntity toDoEntity;
 }

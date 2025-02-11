@@ -52,7 +52,7 @@ public class ToDosResponseDto {
                     toDoEntity.getId(),
                     toDoEntity.getTitle(),
                     toDoEntity.getDate(),
-                    toDoEntity.getComment().size());
+                    toDoEntity.getCommentEntities().size());
         }
     }
 }

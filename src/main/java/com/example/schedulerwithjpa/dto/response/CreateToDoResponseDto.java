@@ -25,8 +25,8 @@ public class CreateToDoResponseDto {
 
     public CreateToDoResponseDto(ToDoEntity savedToDo) {
         this.id = savedToDo.getId();
-        this.userId = savedToDo.getUser().getId();
-        this.username = savedToDo.getUser().getUsername();
+        this.userId = savedToDo.getUserEntity().getId();
+        this.username = savedToDo.getUserEntity().getUsername();
         this.title = savedToDo.getTitle();
         this.toDo = savedToDo.getToDo();
         this.date = savedToDo.getDate();

@@ -19,6 +19,7 @@ import java.util.List;
 
 @Getter
 @Entity
+@Table(name = "user")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -42,6 +43,6 @@ public class UserEntity extends BaseEntity {
         this.password = newPassword;
     }
 
-    @OneToMany(mappedBy = "to_do")
+    @OneToMany(mappedBy = "userEntity")
     private List<ToDoEntity> toDoEntities;
 }

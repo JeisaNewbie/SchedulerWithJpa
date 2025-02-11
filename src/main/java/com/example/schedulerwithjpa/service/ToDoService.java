@@ -30,13 +30,13 @@ public class ToDoService {
 
     public CreateToDoResponseDto saveToDo(Long userId, LocalDate date, String title, String toDo) {
         
-        UserEntity savedUser = userEntityService.findUserEntityByUserIdOrElseThrow(userId);
+        UserEntity savedUserEntity = userEntityService.findUserEntityByUserIdOrElseThrow(userId);
 
         ToDoEntity toDoEntity = ToDoEntity.builder()
                 .date(date)
                 .title(title)
                 .toDo(toDo)
-                .user(savedUser)
+                .userEntity(savedUserEntity)
                 .build();
 
         ToDoEntity savedToDo = toDoRepository.save(toDoEntity);
@@ -63,8 +63,8 @@ public class ToDoService {
         toDoRepository.deleteById(id);
     }
 
-    private void validateUser(String email, Long password, ToDoEntity savedToDo) {
-        if (!savedToDo.getUser().getEmail().equals(email) || !savedToDo.getUser().getPassword().equals(password)) {
+    private void validateUser(String email, Long password, ToDoEntity toDoEntity) {
+        if (!toDoEntity.getUserEntity().getEmail().equals(email) || !toDoEntity.getUserEntity().getPassword().equals(password)) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "잘못된 이메일 혹은 비밀번호 입니다.");
         }
     }

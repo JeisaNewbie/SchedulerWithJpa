@@ -1,7 +1,8 @@
 package com.example.schedulerwithjpa.service;
 
 import com.example.schedulerwithjpa.dto.response.CreateToDoResponseDto;
-import com.example.schedulerwithjpa.dto.response.ToDosResponseDto;
+import com.example.schedulerwithjpa.dto.response.GetToDoResponseDto;
+import com.example.schedulerwithjpa.dto.response.GetToDosResponseDto;
 import com.example.schedulerwithjpa.entity.ToDoEntity;
 import com.example.schedulerwithjpa.entity.UserEntity;
 import com.example.schedulerwithjpa.repository.ToDoRepository;
@@ -21,11 +22,15 @@ public class ToDoService {
     private final ToDoRepository toDoRepository;
     private final UserEntityService userEntityService;
 
-    public List<ToDosResponseDto> findAllToDo() {
+    public List<GetToDosResponseDto> findAllToDo() {
         return  userEntityService.findAllUserEntity()
                 .stream()
-                .map(ToDosResponseDto::new)
+                .map(GetToDosResponseDto::new)
                 .toList();
+    }
+
+    public GetToDoResponseDto findToDoByToDoId(Long id) {
+        return new GetToDoResponseDto(toDoRepository.findByIdOrElseThrow(id));
     }
 
     public CreateToDoResponseDto saveToDo(Long userId, LocalDate date, String title, String toDo) {

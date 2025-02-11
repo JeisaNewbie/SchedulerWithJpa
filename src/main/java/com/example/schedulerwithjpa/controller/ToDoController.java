@@ -4,9 +4,9 @@ import com.example.schedulerwithjpa.dto.request.DeleteToDoRequestDto;
 import com.example.schedulerwithjpa.dto.request.ToDoRequestDto;
 import com.example.schedulerwithjpa.dto.request.UpdateToDoRequestDto;
 import com.example.schedulerwithjpa.dto.response.CreateToDoResponseDto;
-import com.example.schedulerwithjpa.dto.response.ToDosResponseDto;
+import com.example.schedulerwithjpa.dto.response.GetToDoResponseDto;
+import com.example.schedulerwithjpa.dto.response.GetToDosResponseDto;
 import com.example.schedulerwithjpa.dto.response.UpdateToDoResponseDto;
-import com.example.schedulerwithjpa.entity.ToDoEntity;
 import com.example.schedulerwithjpa.service.ToDoService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -24,18 +24,18 @@ public class ToDoController {
 
     // 모든 일정 조회
     @GetMapping("/todos")
-    public ResponseEntity<List<ToDosResponseDto>> findAllToDos() {
+    public ResponseEntity<List<GetToDosResponseDto>> findAllToDos() {
         return ResponseEntity.ok(toDoService.findAllToDo());
     }
 
     // 단일 일정 조회
     @GetMapping("/todos/{id}")
-    public ResponseEntity<ToDosResponseDto> findToDoById(
+    public ResponseEntity<GetToDoResponseDto> findToDoById(
             @Valid
             @Min(value = 1, message = "ID 값은 1 이상이어야 합니다.")
             @PathVariable Long id
     ) {
-    return ResponseEntity.ok().build();
+    return ResponseEntity.ok(toDoService.findToDoByToDoId(id));
     }
 
     // 일정 생성

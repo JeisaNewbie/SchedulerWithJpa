@@ -3,8 +3,10 @@ package com.example.schedulerwithjpa.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+@Getter
 @Entity
 @Table(name = "comment")
 @Builder

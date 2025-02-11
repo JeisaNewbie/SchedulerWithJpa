@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Getter
-public class ToDosResponseDto {
+public class GetToDosResponseDto {
     private Long userId;
 
     private String username;
@@ -17,7 +17,7 @@ public class ToDosResponseDto {
 
     private List<ToDo> toDos;
 
-    public ToDosResponseDto(UserEntity userEntity) {
+    public GetToDosResponseDto(UserEntity userEntity) {
         this.userId = userEntity.getId();
         this.username = userEntity.getUsername();
         this.toDos = ToDo.ofList(userEntity.getToDoEntities());

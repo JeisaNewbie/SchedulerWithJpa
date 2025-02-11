@@ -34,8 +34,8 @@ public class ToDoEntity extends BaseEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @OneToMany(mappedBy = "comment")
-    private List<CommentEntityTmpl> comment;
+    @OneToMany(mappedBy = "to_do")
+    private List<CommentEntity> comment;
 
     public void updateToDo(LocalDate date, String title, String toDo) {
         this.date = date;

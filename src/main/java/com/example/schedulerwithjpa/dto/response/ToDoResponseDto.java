@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 public class ToDoResponseDto {
-    private Long scheduleId;
+    private Long toDoId;
 
     private String username;
 
@@ -24,11 +24,17 @@ public class ToDoResponseDto {
 
     private List<Comment> comments;
 
+    @Getter
     private static class Comment {
 
-        private Long commentId;
+        private final Long commentId;
 
-        private String comment;
+        private final String comment;
+
+        private Comment(Long commentId, String comment) {
+            this.commentId = commentId;
+            this.comment = comment;
+        }
 
     }
 }

@@ -24,6 +24,7 @@ public class ToDosResponseDto {
         this.toDoNum = toDos.size();
     }
 
+    @Getter
     private static class ToDo {
 
         private final Long toDoId;

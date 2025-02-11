@@ -2,6 +2,7 @@ package com.example.schedulerwithjpa.dto.response;
 
 import com.example.schedulerwithjpa.entity.ToDoEntity;
 import com.example.schedulerwithjpa.entity.User;
+import com.example.schedulerwithjpa.entity.UserEntityTmpl;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -17,21 +18,22 @@ public class ToDosResponseDto {
 
     private List<ToDo> toDos;
 
-    public ToDosResponseDto(User user) {
-        this.userId = user.getId();
-        this.username = user.getUsername();
-        this.toDos = ToDo.ofList(null); //user.getToDoEntities
+    // UserEntityTmpl -> UserEntity 로 수정
+    public ToDosResponseDto(UserEntityTmpl userEntityTmpl) {
+        this.userId = userEntityTmpl.getId();
+        this.username = userEntityTmpl.getUsername();
+        this.toDos = ToDo.ofList(userEntityTmpl.getToDoEntities());
     }
 
     private static class ToDo {
 
-        private Long toDoId;
+        private final Long toDoId;
 
-        private String title;
+        private final String title;
 
-        private LocalDate date;
+        private final LocalDate date;
 
-        private Long commentNum;
+        private final Long commentNum;
 
         private ToDo(Long toDoId, String title, LocalDate date, Long commentNum) {
             this.toDoId = toDoId;

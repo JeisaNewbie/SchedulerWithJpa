@@ -2,7 +2,7 @@ package com.example.schedulerwithjpa.service;
 
 import com.example.schedulerwithjpa.dto.response.UserResponseDto;
 import com.example.schedulerwithjpa.dto.response.UsersResponseDto;
-import com.example.schedulerwithjpa.entity.User;
+import com.example.schedulerwithjpa.entity.UserEntity;
 import com.example.schedulerwithjpa.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -28,29 +28,29 @@ public class UserService {
 
     public UserResponseDto saveUser(String username, String email, Long password) {
 
-        User user = User.builder()
+        UserEntity userEntity = UserEntity.builder()
                 .username(username)
                 .email(email)
                 .password(password)
                 .build();
 
-        User savedUser = userRepository.findByEmailAndPassword(email, password)
-                .orElseGet(() -> userRepository.save(user));
+        UserEntity savedUserEntity = userRepository.findByEmailAndPassword(email, password)
+                .orElseGet(() -> userRepository.save(userEntity));
 
-        return new UserResponseDto(savedUser);
+        return new UserResponseDto(savedUserEntity);
     }
 
     @Transactional
     public void updateUser(String email, String username, Long oldPassword, Long newPassword) {
 
-        User savedUser = userRepository.findByEmailAndPasswordOrElseThrow(email, oldPassword);
+        UserEntity savedUserEntity = userRepository.findByEmailAndPasswordOrElseThrow(email, oldPassword);
 
-        savedUser.updateUser(username, newPassword);
+        savedUserEntity.updateUser(username, newPassword);
     }
 
     public void deleteUser(String email, Long password) {
-        User savedUser = userRepository.findByEmailAndPasswordOrElseThrow(email, password);
+        UserEntity savedUserEntity = userRepository.findByEmailAndPasswordOrElseThrow(email, password);
 
-        userRepository.delete(savedUser);
+        userRepository.delete(savedUserEntity);
     }
 }

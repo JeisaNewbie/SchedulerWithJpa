@@ -1,6 +1,6 @@
 package com.example.schedulerwithjpa.dto.response;
 
-import com.example.schedulerwithjpa.entity.User;
+import com.example.schedulerwithjpa.entity.UserEntity;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -17,10 +17,10 @@ public class UsersResponseDto {
 
     private Long scheduleNum;
 
-    public UsersResponseDto(User user) {
-        this.id = user.getId();
-        this.username = user.getUsername();
-        this.email = user.getEmail();
-        this.createdAt = user.getCreatedAt();
+    public UsersResponseDto(UserEntity userEntity) {
+        this.id = userEntity.getId();
+        this.username = userEntity.getUsername();
+        this.email = userEntity.getEmail();
+        this.createdAt = userEntity.getCreatedAt();
     }
 }

@@ -1,6 +1,6 @@
 package com.example.schedulerwithjpa.dto.response;
 
-import com.example.schedulerwithjpa.entity.User;
+import com.example.schedulerwithjpa.entity.UserEntity;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -21,11 +21,11 @@ public class UserResponseDto {
 
     private List<Schedule> schedules;
 
-    public UserResponseDto(User savedUser) {
-        this.id = savedUser.getId();
-        this.username = savedUser.getUsername();
-        this.email = savedUser.getEmail();
-        this.createdAt = savedUser.getCreatedAt();
+    public UserResponseDto(UserEntity savedUserEntity) {
+        this.id = savedUserEntity.getId();
+        this.username = savedUserEntity.getUsername();
+        this.email = savedUserEntity.getEmail();
+        this.createdAt = savedUserEntity.getCreatedAt();
 //        this.schedules = Schedule.getList(savedUser);
     }
 
@@ -40,7 +40,7 @@ public class UserResponseDto {
 
         private LocalDate date;
 
-        public static List<Schedule> getList(User savedUser) {
+        public static List<Schedule> getList(UserEntity savedUserEntity) {
             List<Schedule> schedules = new ArrayList<>();
             return null;
         }

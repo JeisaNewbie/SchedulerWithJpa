@@ -16,6 +16,10 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    public List<UserEntity> findAllUserEntity() {
+        return userRepository.findAll();
+    }
+
     public List<UsersResponseDto> findAllUser() {
         return userRepository.findAll()
                 .stream().map(UsersResponseDto::new)

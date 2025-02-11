@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /*
 * @Entity -> 기본생성자 필수, 없으면 컴파일 에러
 * @Builder -> 생성자가 없을경우 AllArgsConstructor 를 생성하여 Builder code 를 작성하지만,
@@ -40,7 +42,6 @@ public class UserEntity extends BaseEntity {
         this.password = newPassword;
     }
 
-//    @OneToMany(mappedBy = "to_do")
-//    private List<ToDoEntity> toDoEntities;
-
+    @OneToMany(mappedBy = "to_do")
+    private List<ToDoEntity> toDoEntities;
 }

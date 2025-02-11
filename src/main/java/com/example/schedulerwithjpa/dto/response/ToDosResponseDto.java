@@ -13,7 +13,7 @@ public class ToDosResponseDto {
 
     private String username;
 
-    private Long toDoNum;
+    private Integer toDoNum;
 
     private List<ToDo> toDos;
 
@@ -21,6 +21,7 @@ public class ToDosResponseDto {
         this.userId = userEntity.getId();
         this.username = userEntity.getUsername();
         this.toDos = ToDo.ofList(userEntity.getToDoEntities());
+        this.toDoNum = toDos.size();
     }
 
     private static class ToDo {
@@ -31,9 +32,9 @@ public class ToDosResponseDto {
 
         private final LocalDate date;
 
-        private final Long commentNum;
+        private final Integer commentNum;
 
-        private ToDo(Long toDoId, String title, LocalDate date, Long commentNum) {
+        private ToDo(Long toDoId, String title, LocalDate date, Integer commentNum) {
             this.toDoId = toDoId;
             this.title = title;
             this.date = date;
@@ -51,7 +52,7 @@ public class ToDosResponseDto {
                     toDoEntity.getId(),
                     toDoEntity.getTitle(),
                     toDoEntity.getDate(),
-                    null);
+                    toDoEntity.getComment().size());
         }
     }
 }

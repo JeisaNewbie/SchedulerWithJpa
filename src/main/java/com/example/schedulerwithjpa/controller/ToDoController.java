@@ -2,6 +2,7 @@ package com.example.schedulerwithjpa.controller;
 
 import com.example.schedulerwithjpa.dto.request.DeleteToDoRequestDto;
 import com.example.schedulerwithjpa.dto.request.ToDoRequestDto;
+import com.example.schedulerwithjpa.dto.request.UpdateToDoRequestDto;
 import com.example.schedulerwithjpa.dto.response.CreateToDoResponseDto;
 import com.example.schedulerwithjpa.dto.response.ToDosResponseDto;
 import com.example.schedulerwithjpa.dto.response.UpdateToDoResponseDto;
@@ -44,7 +45,11 @@ public class ToDoController {
             @RequestBody
             ToDoRequestDto dto
     ) {
-        return ResponseEntity.ok(new CreateToDoResponseDto());
+        return ResponseEntity.ok(toDoService.saveToDo(
+                dto.getUserId(),
+                dto.getDate(),
+                dto.getTitle(),
+                dto.getToDo()));
     }
 
     // 일정 정보 수정
@@ -52,8 +57,17 @@ public class ToDoController {
     public ResponseEntity<UpdateToDoResponseDto> updateToDo(
             @Valid
             @RequestBody
-            ToDoRequestDto dto
+            UpdateToDoRequestDto dto
     ) {
+        toDoService.updateToDo(
+                dto.getId(),
+                dto.getEmail(),
+                dto.getPassword(),
+                dto.getDate(),
+                dto.getTitle(),
+                dto.getToDo()
+        );
+
         return ResponseEntity.noContent().build();
     }
 
@@ -63,6 +77,12 @@ public class ToDoController {
             @RequestBody
             DeleteToDoRequestDto dto
     ) {
+        toDoService.deleteToDo(
+                dto.getEmail(),
+                dto.getPassword(),
+                dto.getId()
+        );
+
         return ResponseEntity.noContent().build();
     }
 

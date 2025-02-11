@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "to_do")
@@ -31,8 +32,14 @@ public class ToDoEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity user;
 
-//    @OneToMany(mappedBy = "comment")
-//    private Comment comment;
+    @OneToMany(mappedBy = "comment")
+    private List<CommentEntityTmpl> comment;
+
+    public void updateToDo(LocalDate date, String title, String toDo) {
+        this.date = date;
+        this.title = title;
+        this.toDo = toDo;
+    }
 }

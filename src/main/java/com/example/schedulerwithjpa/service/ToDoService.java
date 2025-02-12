@@ -46,9 +46,7 @@ public class ToDoService {
                 .userEntity(savedUserEntity)
                 .build();
 
-        ToDoEntity savedToDo = toDoRepository.save(toDoEntity);
-        
-        return new CreateToDoResponseDto(savedToDo);
+        return new CreateToDoResponseDto(toDoRepository.save(toDoEntity));
     }
 
     @Transactional

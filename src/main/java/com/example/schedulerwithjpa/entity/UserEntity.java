@@ -43,4 +43,7 @@ public class UserEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "userEntity")
     private List<ToDoEntity> toDoEntities;
+
+    @OneToMany(mappedBy = "userEntity")
+    private List<CommentEntity> commentEntities;
 }

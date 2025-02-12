@@ -21,8 +21,9 @@ public class CommentEntity extends BaseEntity {
     @Column(nullable = false)
     private String comment;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity userEntity;
 
     @ManyToOne
     @JoinColumn(name = "to_do_id")

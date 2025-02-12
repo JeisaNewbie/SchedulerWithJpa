@@ -10,12 +10,11 @@ public class LoginService {
 
     private final UserService userService;
 
-    public CreateUserResponseDto saveUser(String email, String username, Long password) {
-        return userService.saveUser(email, username, password);
+    public CreateUserResponseDto saveUser(String username, String email, Long password) {
+        return userService.saveUser(username, email, password);
     }
 
     public CreateUserResponseDto findUserByEmailAndPassword(String email, Long password) {
-//        return userService.findUserByEmailAndPasswordOrElseThrow(email, password);
-        return null;
+        return userService.findUserByEmailAndPassword(email, password);
     }
 }

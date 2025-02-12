@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
     private final LoginService loginService;
-    private final UserService userService;
 
     @GetMapping("/login")
     public ResponseEntity<Void> login(
@@ -47,8 +46,8 @@ public class LoginController {
     public ResponseEntity<CreateUserResponseDto> signup(@RequestBody SignUpRequestDto dto) {
 
         return ResponseEntity.ok(loginService.saveUser(
-                dto.getEmail(),
                 dto.getUsername(),
+                dto.getEmail(),
                 dto.getPassword()
         ));
     }

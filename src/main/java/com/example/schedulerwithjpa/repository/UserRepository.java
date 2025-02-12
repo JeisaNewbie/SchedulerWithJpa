@@ -13,10 +13,16 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
         return findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."));
     }
 
-    default UserEntity findByEmailAndPasswordOrElseThrow(String email, Long password) {
-        return findByEmailAndPassword(email, password).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."));
+    default UserEntity findByEmailAndPasswordOrElseThrow(String email, String password) {
+        return findByEmailAndPassword(email, password)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "이메일 혹은 비밀번호가 틀립니다."));
     }
 
-    Optional<UserEntity> findByEmailAndPassword(String email, Long password);
+    default UserEntity findByEmailOrElseThrow(String email) {
+        return findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."));
+    }
 
+    Optional<UserEntity> findByEmailAndPassword(String email, String password);
+
+    Optional<UserEntity> findByEmail(String email);
 }

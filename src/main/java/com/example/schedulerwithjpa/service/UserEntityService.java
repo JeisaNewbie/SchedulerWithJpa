@@ -2,6 +2,7 @@ package com.example.schedulerwithjpa.service;
 
 import com.example.schedulerwithjpa.entity.UserEntity;
 import com.example.schedulerwithjpa.repository.UserRepository;
+import com.example.schedulerwithjpa.util.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.List;
 public class UserEntityService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public List<UserEntity> findAllUserEntity() {
         return userRepository.findAll();
@@ -21,7 +23,12 @@ public class UserEntityService {
         return userRepository.findByIdOrElseThrow(userId);
     }
 
-    public UserEntity findUserEntityByEmailAndPassword(String email, Long password) {
-        return userRepository.findByEmailAndPasswordOrElseThrow(email, password);
+    public UserEntity validateUserOrElseThrow(String email, String password) {
+
+        UserEntity user = userRepository.findByEmailOrElseThrow(email);
+
+        passwordEncoder.verify(password, user.getPassword());
+
+        return user;
     }
 }

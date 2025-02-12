@@ -6,6 +6,7 @@ import com.example.schedulerwithjpa.dto.response.GetToDosResponseDto;
 import com.example.schedulerwithjpa.entity.ToDoEntity;
 import com.example.schedulerwithjpa.entity.UserEntity;
 import com.example.schedulerwithjpa.repository.ToDoRepository;
+import com.example.schedulerwithjpa.util.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class ToDoService {
     private final UserEntityService userEntityService;
 
     public List<GetToDosResponseDto> findAllToDo() {
+
         return  userEntityService.findAllUserEntity()
                 .stream()
                 .map(GetToDosResponseDto::new)
@@ -69,7 +71,11 @@ public class ToDoService {
     }
 
     private void validateUser(String email, Long password, ToDoEntity toDoEntity) {
-        if (!toDoEntity.getUserEntity().getEmail().equals(email) || !toDoEntity.getUserEntity().getPassword().equals(password)) {
+
+        UserEntity toDoUser = toDoEntity.getUserEntity();
+        UserEntity user = userEntityService.validateUserOrElseThrow(email, password.toString());
+
+        if (!toDoUser.equals(user)) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "잘못된 이메일 혹은 비밀번호 입니다.");
         }
     }

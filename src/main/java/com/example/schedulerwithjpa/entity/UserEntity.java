@@ -1,10 +1,7 @@
 package com.example.schedulerwithjpa.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -23,6 +20,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class UserEntity extends BaseEntity {
 
     @Id
@@ -33,12 +31,12 @@ public class UserEntity extends BaseEntity {
     private String username;
 
     @Column(nullable = false)
-    private Long password;
+    private String password;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-    public void updateUser(String username, Long newPassword) {
+    public void updateUser(String username, String newPassword) {
         this.username = username;
         this.password = newPassword;
     }

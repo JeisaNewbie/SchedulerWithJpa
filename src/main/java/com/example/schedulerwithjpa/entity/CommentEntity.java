@@ -1,15 +1,13 @@
 package com.example.schedulerwithjpa.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Getter
 @Entity
 @Table(name = "comment")
 @Builder
+@EqualsAndHashCode
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class CommentEntity extends BaseEntity {
@@ -28,4 +26,8 @@ public class CommentEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "to_do_id")
     private ToDoEntity toDoEntity;
+
+    public void updateComment(String comment) {
+        this.comment = comment;
+    }
 }

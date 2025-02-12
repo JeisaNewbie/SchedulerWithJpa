@@ -53,8 +53,11 @@ public class ToDoService {
     public void updateToDo(Long id, String email, Long password, LocalDate date, String title, String toDo) {
         
         ToDoEntity savedToDo = toDoRepository.findByIdOrElseThrow(id);
+        UserEntity userEntity = userEntityService.validateUserOrElseThrow(email, password.toString());
 
-        validateUser(email, password, savedToDo);
+        if (!savedToDo.getUserEntity().equals(userEntity)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "권한이 없습니다.");
+        }
 
         savedToDo.updateToDo(date, title, toDo);
     }
@@ -62,19 +65,12 @@ public class ToDoService {
     public void deleteToDo(String email, Long password, Long id) {
         
         ToDoEntity savedToDo = toDoRepository.findByIdOrElseThrow(id);
+        UserEntity userEntity = userEntityService.validateUserOrElseThrow(email, password.toString());
 
-        validateUser(email, password, savedToDo);
+        if (!savedToDo.getUserEntity().equals(userEntity)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "권한이 없습니다.");
+        }
 
         toDoRepository.deleteById(id);
-    }
-
-    private void validateUser(String email, Long password, ToDoEntity toDoEntity) {
-
-        UserEntity toDoUser = toDoEntity.getUserEntity();
-        UserEntity user = userEntityService.validateUserOrElseThrow(email, password.toString());
-
-        if (!toDoUser.equals(user)) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "잘못된 이메일 혹은 비밀번호 입니다.");
-        }
     }
 }

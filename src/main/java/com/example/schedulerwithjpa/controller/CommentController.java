@@ -8,6 +8,8 @@ import com.example.schedulerwithjpa.dto.response.GetAndUpdateCommentResponseDto;
 import com.example.schedulerwithjpa.dto.response.GetCommentsResponseDto;
 import com.example.schedulerwithjpa.dto.response.UpdateCommentResponseDto;
 import com.example.schedulerwithjpa.service.CommentService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,22 +28,48 @@ public class CommentController {
     }
 
     @GetMapping("/comment/{id}")
-    public ResponseEntity<GetAndUpdateCommentResponseDto> findCommentById(@PathVariable Long id) {
+    public ResponseEntity<GetAndUpdateCommentResponseDto> findCommentById(
+            @Valid
+            @Min(value = 1, message = "ID 값은 1 이상이어야 합니다.")
+            @PathVariable Long id
+    ) {
         return ResponseEntity.ok(commentService.findComment(id));
     }
 
     @PostMapping("/comment")
-    public ResponseEntity<CreateCommentResponseDto> saveComment(@RequestBody CommentRequestDto dto) {
+    public ResponseEntity<CreateCommentResponseDto> saveComment(
+            @Valid
+            @RequestBody CommentRequestDto dto
+    ) {
         return ResponseEntity.ok(commentService.saveComment(dto.getUserId(), dto.getToDoId(), dto.getComment()));
     }
 
     @PatchMapping("/comment")
-    public ResponseEntity<UpdateCommentResponseDto> updateComment(@RequestBody UpdateCommentRequestDto dto) {
+    public ResponseEntity<UpdateCommentResponseDto> updateComment(
+            @Valid
+            @RequestBody UpdateCommentRequestDto dto
+    ) {
+        commentService.updateComment(
+                dto.getId(),
+                dto.getEmail(),
+                dto.getPassword(),
+                dto.getComment()
+        );
+
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/comment")
-    public ResponseEntity<Void> deleteComment(@RequestBody DeleteCommentRequestDto dto) {
+    public ResponseEntity<Void> deleteComment(
+            @Valid
+            @RequestBody DeleteCommentRequestDto dto
+    ) {
+
+        commentService.deleteComment(
+                dto.getId(),
+                dto.getEmail(),
+                dto.getPassword()
+        );
         return ResponseEntity.noContent().build();
     }
 }

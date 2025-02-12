@@ -20,12 +20,7 @@ public class ToDoEntityService {
     }
 
     public ToDoEntity findToDoEntityByIdOrElseThrow(Long id) {
-        return toDoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "일정을 찾을 수 없습니다."));
+        return toDoRepository.findByIdOrElseThrow(id);
     }
-
-    public ToDoEntity findToDoByToDoIdOrElseThrow(Long toDoId) {
-        return toDoRepository.findByIdOrElseThrow(toDoId);
-    }
-
 
 }

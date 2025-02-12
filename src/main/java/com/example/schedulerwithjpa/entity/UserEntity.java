@@ -41,9 +41,9 @@ public class UserEntity extends BaseEntity {
         this.password = newPassword;
     }
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ToDoEntity> toDoEntities;
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<CommentEntity> commentEntities;
 }

@@ -9,7 +9,9 @@ import com.example.schedulerwithjpa.entity.UserEntity;
 import com.example.schedulerwithjpa.repository.CommentRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -44,5 +46,29 @@ public class CommentService {
                 .build();
 
         return new CreateCommentResponseDto(commentRepository.save(commentEntity));
+    }
+
+    @Transactional
+    public void updateComment(Long id, String email, Long password, String comment) {
+        CommentEntity savedComment = commentRepository.findByIdOrElseThrow(id);
+        UserEntity userEntity = userEntityService.validateUserOrElseThrow(email, password.toString());
+
+        if (!savedComment.getUserEntity().equals(userEntity)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "권한이 없습니다.");
+        }
+
+        savedComment.updateComment(comment);
+    }
+
+
+    public void deleteComment(Long id, String email, Long password) {
+        CommentEntity savedComment = commentRepository.findByIdOrElseThrow(id);
+        UserEntity userEntity = userEntityService.validateUserOrElseThrow(email, password.toString());
+
+        if (!savedComment.getUserEntity().equals(userEntity)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "권한이 없습니다.");
+        }
+
+        commentRepository.deleteById(id);
     }
 }
